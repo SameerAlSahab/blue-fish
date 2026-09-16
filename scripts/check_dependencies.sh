@@ -4,7 +4,7 @@
 
 
 REQUIRED_DEPS=(
-  "cloudflared" "curl" "grep"
+  "cloudflared" "curl" "grep" "python3"
 )
 
 MISSING_DEPS=()
