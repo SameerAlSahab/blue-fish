@@ -37,3 +37,26 @@ SHORTEN_WITH_BITLY() {
   LOG "Bitly Link Generated Successfully!"
   printf '%s\n' "${bitly_url}"
 }
+
+# Try with other services
+SHORTEN_LINK() {
+  local long_url="$1"
+  local provider="${2:-is.gd}"
+  local masked_url=""
+
+  LOG "Shorting URL via ${provider}..."
+
+  if [[ "${provider}" == "is.gd" ]]; then
+    masked_url="$(curl -s "https://is.gd/create.php?format=simple&url=${long_url}")"
+  elif [[ "${provider}" == "tinyurl" ]]; then
+    masked_url="$(curl -s "https://tinyurl.com/api-create.php?url=${long_url}")"
+  fi
+
+  if [[ -n "${masked_url}" && "${masked_url}" =~ ^http ]]; then
+    LOG "Shorted URL Created: ${masked_url}"
+    printf '%s' "${masked_url}"
+  else
+    LOGW "Shorting failed. Returning raw Cloudflare URL."
+    printf '%s' "${long_url}"
+  fi
+}
