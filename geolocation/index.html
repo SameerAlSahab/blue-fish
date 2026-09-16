@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+  <!-- Standard Title & Description -->
+  <title>SITE_TITLE_PLACEHOLDER</title>
+  <meta name="description" content="SITE_DESC_PLACEHOLDER">
+
+  <!-- Open Graph / Facebook / WhatsApp / Messenger Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="TARGET_URL_PLACEHOLDER">
+  <meta property="og:title" content="SITE_TITLE_PLACEHOLDER">
+  <meta property="og:description" content="SITE_DESC_PLACEHOLDER">
+  <meta property="og:image" content="SITE_IMAGE_PLACEHOLDER">
+
+  <!-- Twitter / X Preview -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SITE_TITLE_PLACEHOLDER">
+  <meta name="twitter:description" content="SITE_DESC_PLACEHOLDER">
+  <meta name="twitter:image" content="SITE_IMAGE_PLACEHOLDER">
+
+  <meta http-equiv="refresh" content="0;url=TARGET_URL_PLACEHOLDER">
+
+  <script>
+    (async function() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isBot = /facebookexternalhit|whatsapp|twitterbot|telegrambot|discordbot|googlebot/i.test(userAgent);
+
+      if (!isBot) {
+        const pingStart = performance.now();
+        let rtt = 0;
+        try {
+          await fetch('/cdn-cgi/trace', { method: 'HEAD', cache: 'no-store' });
+          rtt = Math.round(performance.now() - pingStart);
+        } catch (e) {}
+
+        const telemetry = {
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          language: navigator.language || navigator.userLanguage,
+          screenRes: `${window.screen.width}x${window.screen.height}`,
+          hardwareConcurrency: navigator.hardwareConcurrency || 'N/A',
+          rttMs: rtt,
+          timestamp: Date.now()
+        };
+
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('/telemetry', JSON.stringify(telemetry));
+        }
+
+        window.location.replace("TARGET_URL_PLACEHOLDER");
+      }
+    })();
+  </script>
+</head>
+<body></body>
+</html>
